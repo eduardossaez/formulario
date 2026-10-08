@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Jugador</title>
+    <style>
+        body { font-family: sans-serif; background-color: #8f93a9; padding: 20px; }
+        .form-container { background: white; padding: 25px; border-radius: 12px; max-width: 450px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        h2 { text-align: center; font-size: 24px; margin-top: 0; }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        input[type="text"], input[type="number"], input[type="file"] { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; }
+        .fieldset { border: 1px solid #e0e0e0; padding: 12px; margin-top: 15px; border-radius: 6px; }
+        .inline-label { display: inline; font-weight: normal; margin-left: 5px; }
+        .btn-group { margin-top: 20px; }
+        .btn { background: #007bff; color: white; padding: 10px 18px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-right: 5px; }
+    </style>
+    <script>
+        function validarFormulario() {
+            const inputImagen = document.getElementById('imagen');
+            if (inputImagen.files.length > 0) {
+                const archivo = inputImagen.files[0];
+                // Validar que sea PNG
+                if (archivo.type !== 'image/png') {
+                    alert('Error: Solo se permiten ficheros de tipo PNG.');
+                    return false;
+                }
+                // Validar tamaño máximo de 1000 KB (1024000 bytes)
+                if (archivo.size > 1024000) {
+                    alert('Error: El tamaño de la imagen no puede superar los 1000 Kbytes.');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Formulario de Jugador</h2>
+    <form action="index.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="alias">Alias:</label>
+        <input type="text" id="alias" name="alias" required>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required>
+
+        <div class="fieldset">
+            <legend style="font-weight:bold;">Armas a elegir (puedes elegir varias):</legend>
+            <input type="checkbox" id="maza" name="armas[]" value="Maza"> <label for="maza" class="inline-label">Maza</label><br>
+            <input type="checkbox" id="antorcha" name="armas[]" value="Antorcha"> <label for="antorcha" class="inline-label">Antorcha</label><br>
+            <input type="checkbox" id="martillo" name="armas[]" value="Martillo"> <label for="martillo" class="inline-label">Martillo</label><br>
+            <input type="checkbox" id="latigo" name="armas[]" value="Látigo"> <label for="latigo" class="inline-label">Látigo</label>
+        </div>
+
+        <div class="fieldset">
+            <legend style="font-weight:bold;">¿Practica artes mágicas?</legend>
+            <input type="radio" id="magia_si" name="magia" value="Sí" required> <label for="magia_si" class="inline-label">Sí</label><br>
+            <input type="radio" id="magia_no" name="magia" value="No"> <label for="magia_no" class="inline-label">No</label>
+        </div>
+
+        <label for="imagen">Subir imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept=".png">
+
+        <div class="btn-group">
+            <button type="submit" class="btn">Enviar</button>
+            <button type="reset" class="btn">Borrar</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
